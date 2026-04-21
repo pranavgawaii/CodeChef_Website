@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | CodeChef MIT-ADT</title>
+    <meta name="description" content="Log in to your CodeChef MIT-ADT account." />
+
+    <!-- 🔑 PASTE YOUR SUPABASE KEYS HERE (from Project Settings → API) -->
+    <meta name="supabase-url"      content="https://mcuzinqwgzmouoexwgjl.supabase.co" />
+    <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jdXppbnF3Z3ptb3VvZXh3Z2psIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3ODEzMTIsImV4cCI6MjA5MjM1NzMxMn0.8us2yp9aqXKY4302SDT6wlJM9aS2hf6zjMV4qf0EGes" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="auth-styles.css" />
+  </head>
+
+  <body class="auth-page">
+
+    <!-- Top Header -->
+    <div class="top-header">
+      <div class="container">
+        <div class="top-header-inner">
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-sun light-icon"></i>
+            <i class="fas fa-moon dark-icon"></i>
+          </button>
+          <div class="top-btn-box">
+            <a href="index.html">Home</a>
+            <a href="signup.html" style="background-color:#0c8c64">Sign Up</a>
+          </div>
+          <div class="top-menu">
+            <ul>
+              <li><a href="index.html#events">Events</a></li>
+              <li><a href="index.html#team">Team</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="top-social">
+            <a href="https://www.instagram.com/codechef_mitadt/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/codechef?lang=en" target="_blank"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <a href="index.html"><img src="CodeChef New Logo 24-25.png" alt="CodeChef MIT-ADT" /></a>
+          </div>
+          <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+          <nav class="main-nav" id="mainNav">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="index.html#events">Events</a></li>
+              <li><a href="index.html#team">Team</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+              <li><a href="signup.html" class="primary-btn" style="padding:8px 20px;border-radius:50px;">Sign Up</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Auth Card -->
+    <main class="auth-main">
+      <div class="auth-card">
+
+        <!-- Logo row -->
+        <div class="auth-logo">
+          <img src="CodeChef New Logo 24-25.png" alt="CodeChef MIT-ADT" />
+          <div class="auth-logo-text">
+            <span class="auth-logo-name">CodeChef</span>
+            <span class="auth-logo-sub">MIT-ADT Chapter</span>
+          </div>
+        </div>
+
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Log in to your account</p>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <a href="login.html"  class="auth-tab active">Login</a>
+          <a href="signup.html" class="auth-tab">Sign Up</a>
+        </div>
+
+        <!-- Connection status banner (shown only if keys missing) -->
+        <div id="configBanner" class="auth-message auth-message--error" style="display:none;">
+          ⚠️ Supabase not configured. Open <strong>login.html</strong> and paste your Project URL &amp; anon key into the two <code>&lt;meta&gt;</code> tags near the top.
+        </div>
+
+        <!-- Status message -->
+        <p id="authMessage" class="auth-message" role="alert" aria-live="polite"></p>
+
+        <!-- Form -->
+        <form id="loginForm" class="auth-form" novalidate>
+
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email</label>
+            <div class="form-input-wrap">
+              <i class="fas fa-envelope field-icon"></i>
+              <input id="loginEmail" type="email" class="form-input"
+                placeholder="you@example.com" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <div class="form-input-wrap">
+              <i class="fas fa-lock field-icon"></i>
+              <input id="loginPassword" type="password" class="form-input"
+                placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="pw-toggle" id="loginPwToggle" aria-label="Toggle password">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-check">
+              <input type="checkbox" id="rememberMe" /> Remember me
+            </label>
+            <a href="#" class="form-forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="auth-submit-btn" id="loginBtn">
+            <span class="btn-label">Login</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+
+        </form>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <button class="oauth-btn" id="googleLoginBtn" type="button">
+          <img src="https://www.google.com/favicon.ico" alt="Google" />
+          Continue with Google
+        </button>
+
+        <p class="auth-switch">No account? <a href="signup.html">Sign up free</a></p>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom" style="padding:1rem 0;">
+          <p>&copy; 2024 CodeChef MIT-ADT. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/codechef_mitadt/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://in.linkedin.com/company/codechef-mitsoe-chapter" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/codechef?lang=en" target="_blank"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module">
+      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+      // ── Read keys ──────────────────────────────────────────────
+      const SUPABASE_URL      = document.querySelector('meta[name="supabase-url"]').content.trim();
+      const SUPABASE_ANON_KEY = document.querySelector('meta[name="supabase-anon-key"]').content.trim();
+
+      const msgEl      = document.getElementById("authMessage");
+      const configBanner = document.getElementById("configBanner");
+
+      function showMsg(text, type = "error") {
+        msgEl.innerHTML = text;
+        msgEl.className = `auth-message auth-message--${type}`;
+        msgEl.style.display = "block";
+      }
+
+      // ── Guard: keys missing? ───────────────────────────────────
+      const keysOk = SUPABASE_URL !== "YOUR_SUPABASE_URL" &&
+                     SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY" &&
+                     SUPABASE_URL.startsWith("https://");
+
+      if (!keysOk) {
+        configBanner.style.display = "block";
+        document.getElementById("loginBtn").disabled = true;
+        document.getElementById("googleLoginBtn").disabled = true;
+      }
+
+      const supabase = keysOk ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+      // ── Redirect if already logged in ─────────────────────────
+      if (supabase) {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          if (session) location.href = "index.html";
+        });
+      }
+
+      // ── Mobile nav ─────────────────────────────────────────────
+      const navToggle = document.getElementById("navToggle");
+      const mainNav   = document.getElementById("mainNav");
+      if (navToggle && mainNav) {
+        navToggle.addEventListener("click", () => {
+          mainNav.classList.toggle("active");
+          navToggle.classList.toggle("active");
+        });
+      }
+
+      // ── Password toggle ────────────────────────────────────────
+      document.getElementById("loginPwToggle").addEventListener("click", function () {
+        const input = document.getElementById("loginPassword");
+        const icon  = this.querySelector("i");
+        input.type  = input.type === "password" ? "text" : "password";
+        icon.className = input.type === "password" ? "fas fa-eye" : "fas fa-eye-slash";
+      });
+
+      // ── Login ──────────────────────────────────────────────────
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!supabase) return;
+
+        msgEl.style.display = "none";
+
+        const email    = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        if (!email || !password) { showMsg("Please fill in all fields."); return; }
+
+        const btn = document.getElementById("loginBtn");
+        btn.disabled = true;
+        btn.classList.add("loading");
+
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        btn.disabled = false;
+        btn.classList.remove("loading");
+
+        if (error) {
+          // Map Supabase errors to friendly messages
+          const friendly = {
+            "Invalid login credentials": "Incorrect email or password.",
+            "Email not confirmed": "Please verify your email first. Check your inbox.",
+          };
+          showMsg(friendly[error.message] || error.message);
+        } else {
+          showMsg("✅ Login successful! Redirecting…", "success");
+          setTimeout(() => location.href = "index.html", 900);
+        }
+      });
+
+      // ── Google OAuth ───────────────────────────────────────────
+      document.getElementById("googleLoginBtn").addEventListener("click", async () => {
+        if (!supabase) return;
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: `${location.origin}/index.html` },
+        });
+        if (error) showMsg(error.message);
+      });
+    </script>
+  </body>
+</html>

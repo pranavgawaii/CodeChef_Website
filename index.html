@@ -30,8 +30,8 @@
             <i class="fas fa-sun light-icon"></i>
             <i class="fas fa-moon dark-icon"></i>
           </button>
-          <div class="top-btn-box">
-            <a href="https://www.codechef.com/login">Login</a>
+          <div class="top-btn-box" id="auth-nav">
+            <a href="login.html" id="login-link">Login</a>
             <a href="#contact" style="background-color: #0c8c64">Contact Us</a>
           </div>
           <div class="top-menu">
@@ -1196,5 +1196,32 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script type="module">
+      import { supabase } from './supabase-config.js';
+
+      async function updateAuthUI() {
+        const { data: { session } } = await supabase.auth.getSession();
+        const topAuthNav = document.getElementById('auth-nav');
+        const mainNavUl = document.querySelector('#mainNav ul');
+        
+        if (session) {
+          // Hide Top Header Buttons for cleaner look when logged in
+          if (topAuthNav) topAuthNav.style.display = 'none';
+
+          // Add Profile Icon to Main Nav
+          const profileLi = document.createElement('li');
+          profileLi.innerHTML = `
+            <a href="profile.html" title="My Profile" style="display: flex; align-items: center; justify-content: center; padding: 5px;">
+              <div style="width: 38px; height: 38px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(155, 61, 196, 0.2); transition: all 0.3s ease;">
+                <i class="fas fa-user"></i>
+              </div>
+            </a>
+          `;
+          mainNavUl.appendChild(profileLi);
+        }
+      }
+
+      updateAuthUI();
+    </script>
   </body>
 </html>
