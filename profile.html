@@ -3,300 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Member Dashboard | CodeChef MIT-ADT</title>
+    <title>Member Dashboard | CodeChef MIT-ADT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <style>
         :root {
-            --p-accent: #b164d4;
-            --p-secondary: #0c8c64;
-            --p-bg: #030308;
-            --p-card: rgba(20, 20, 35, 0.4);
-            --p-border: rgba(255, 255, 255, 0.1);
+            --bg-color: #f9fafb;
+            --card-color: #ffffff;
+            --text-main: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --accent-solid: #000000;
         }
 
-        body.profile-v3 {
-            font-family: 'Outfit', sans-serif;
-            background: var(--p-bg);
-            color: #fff;
+        [data-theme="dark"] {
+            --bg-color: #0c0c0c;
+            --card-color: #161616;
+            --text-main: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #262626;
+            --accent-solid: #ffffff;
+        }
+
+        body.profile-clean {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
-            overflow-x: hidden;
             min-height: 100vh;
-        }
-
-        /* Moving Mesh Gradient Background */
-        .mesh-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(155, 61, 196, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(12, 140, 100, 0.1) 0%, transparent 40%);
-            animation: bgMove 15s infinite alternate ease-in-out;
-        }
-
-        @keyframes bgMove {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-50px) scale(1.1); }
-        }
-
-        .main-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        /* Upper Profile Section */
-        .profile-header-v3 {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 50px;
-            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .avatar-v3 {
-            width: 120px;
-            height: 120px;
-            border-radius: 35% 65% 70% 30% / 30% 40% 60% 70%;
-            background: linear-gradient(135deg, var(--p-accent), var(--p-secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50px;
-            font-weight: 800;
-            box-shadow: 0 20px 40px rgba(155, 61, 196, 0.3);
-            animation: morph 8s infinite ease-in-out;
+            padding: 20px;
         }
 
-        @keyframes morph {
-            0% { border-radius: 35% 65% 70% 30% / 30% 40% 60% 70%; }
-            50% { border-radius: 50% 50% 33% 67% / 63% 27% 73% 37%; }
-            100% { border-radius: 35% 65% 70% 30% / 30% 40% 60% 70%; }
+        .dashboard-wrapper {
+            width: 100%;
+            max-width: 520px;
+            animation: pureFadeIn 0.5s ease;
         }
 
-        .welcome-text h1 {
-            font-size: 3rem;
-            margin: 0;
-            background: linear-gradient(to right, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .welcome-text p {
-            color: #888;
-            font-size: 1.1rem;
-            margin-top: 5px;
-        }
-
-        /* Info Grid */
-        .info-grid-v3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .glass-card {
-            background: var(--p-card);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--p-border);
-            border-radius: 24px;
-            padding: 35px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            animation: fadeIn 1s ease-out backwards;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(177, 100, 212, 0.4);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--p-accent);
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
-        }
-
-        .data-item {
-            margin-bottom: 20px;
-        }
-
-        .data-label {
-            display: block;
-            color: #666;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-        }
-
-        .data-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ddd;
-        }
-
-        /* Action Buttons */
-        .actions-v3 {
-            margin-top: 40px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-v3 {
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-
-        .btn-glow {
-            background: #fff;
-            color: #000;
-            border: none;
-        }
-
-        .btn-glow:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255,255,255,0.4);
-        }
-
-        .btn-danger-v3 {
-            background: transparent;
-            border: 1px solid rgba(255, 77, 77, 0.3);
-            color: #ff4d4d;
-        }
-
-        .btn-danger-v3:hover {
-            background: rgba(255, 77, 77, 0.1);
-            border-color: #ff4d4d;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes pureFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            .profile-header-v3 { flex-direction: column; text-align: center; }
-            .welcome-text h1 { font-size: 2rem; }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header img {
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .clean-card {
+            background: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+
+        .avatar-clean {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 auto 24px;
+        }
+
+        .user-main-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 6px 0;
+        }
+
+        .user-role-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 32px;
+        }
+
+        .info-list {
+            text-align: left;
+            margin-bottom: 32px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: grid;
+            gap: 12px;
+        }
+
+        .btn-clean {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-black {
+            background: var(--accent-solid);
+            color: var(--bg-color);
+            border: 1px solid var(--accent-solid);
+        }
+
+        .btn-black:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        .footer-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 480px) {
+            .clean-card { padding: 30px 20px; }
+            .info-row { flex-direction: column; align-items: flex-start; gap: 4px; }
         }
     </style>
 </head>
-<body class="profile-v3">
-    <div class="mesh-bg"></div>
+<body class="profile-clean">
 
-    <div class="main-container">
-        <!-- Header Section -->
-        <div class="profile-header-v3">
-            <div class="avatar-v3" id="avatar-v3">M</div>
-            <div class="welcome-text">
-                <p>MEMBER DASHBOARD</p>
-                <h1 id="user-title">...</h1>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-header">
+            <img src="CodeChef New Logo 24-25.png" alt="CodeChef">
+            <h1>Account Settings</h1>
+        </div>
+
+        <div class="clean-card">
+            <div class="avatar-clean" id="avatar-initial">M</div>
+            
+            <h2 class="user-main-name" id="display-name">Loading...</h2>
+            <div class="user-role-tag" id="display-role">Member</div>
+
+            <div class="info-list">
+                <div class="info-row">
+                    <span class="info-label">Email Address</span>
+                    <span class="info-value" id="display-email">...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Member Since</span>
+                    <span class="info-value" id="display-date">...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Authentication</span>
+                    <span class="info-value">Supabase Auth</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <a href="index.html" class="btn-clean btn-black">
+                    Return to Dashboard
+                </a>
+                <button id="logout-trigger" class="btn-clean btn-outline">
+                    Sign Out
+                </button>
             </div>
         </div>
 
-        <!-- Cards Section -->
-        <div class="info-grid-v3">
-            <!-- Account Info -->
-            <div class="glass-card" style="animation-delay: 0.2s">
-                <div class="card-title">
-                    <i class="fas fa-id-card"></i> Profile Details
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Full Name</span>
-                    <span class="data-value" id="v3-name">...</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Email Signature</span>
-                    <span class="data-value" id="v3-email">...</span>
-                </div>
-            </div>
-
-            <!-- Stats/Activity -->
-            <div class="glass-card" style="animation-delay: 0.4s">
-                <div class="card-title">
-                    <i class="fas fa-chart-line"></i> Membership
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Membership Tier</span>
-                    <span class="data-value" style="color: var(--p-secondary)" id="v3-role">Standard</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Member Since</span>
-                    <span class="data-value" id="v3-joined">...</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Actions -->
-        <div class="actions-v3">
-            <a href="index.html" class="btn-v3 btn-glow">
-                <i class="fas fa-home"></i> Back to Home
-            </a>
-            <button id="logout-v3" class="btn-v3 btn-danger-v3">
-                <i class="fas fa-door-open"></i> Log Out
-            </button>
-        </div>
+        <a href="index.html" class="footer-link">CodeChef MIT-ADT Chapter</a>
     </div>
 
     <script type="module">
         import { supabase } from './supabase-config.js';
 
-        async function init() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) { window.location.href = 'login.html'; return; }
+        async function initCleanProfile() {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
 
             const user = session.user;
             const name = user.user_metadata.full_name || 'Member';
 
-            // Populate UI
-            document.getElementById('user-title').textContent = name;
-            document.getElementById('v3-name').textContent = name;
-            document.getElementById('v3-email').textContent = user.email;
-            document.getElementById('avatar-v3').textContent = name.charAt(0).toUpperCase();
+            // DOM Updates
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-email').textContent = user.email;
+            document.getElementById('avatar-initial').textContent = name.charAt(0).toUpperCase();
 
-            const joined = new Date(user.created_at);
-            document.getElementById('v3-joined').textContent = joined.toLocaleDateString(undefined, {
-                year: 'numeric', month: 'long', day: 'numeric'
+            // Date Formulation
+            const date = new Date(user.created_at);
+            document.getElementById('display-date').textContent = date.toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             });
 
-            // Fetch role
+            // Fetch actual role
             const { data: profile } = await supabase
                 .from('profiles')
                 .select('role')
                 .eq('id', user.id)
                 .single();
-            if (profile) document.getElementById('v3-role').textContent = profile.role.toUpperCase();
+            
+            if (profile) {
+                document.getElementById('display-role').textContent = profile.role;
+            }
         }
 
-        document.getElementById('logout-v3').addEventListener('click', async () => {
+        document.getElementById('logout-trigger').addEventListener('click', async () => {
             await supabase.auth.signOut();
             window.location.href = 'index.html';
         });
 
-        init();
+        initCleanProfile();
     </script>
 </body>
 </html>
